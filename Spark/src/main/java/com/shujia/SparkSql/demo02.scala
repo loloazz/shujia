@@ -24,9 +24,25 @@ object demo02 {
      * 读取CSV
      * 就要指定字段名
      */
-    spark.read.format("csv").option("seq",",")// 指定分隔符默认是逗号
+    spark.read.format("csv")
+      .option("seq",",")// 指定分隔符默认是逗号
       .schema("id string ,name string ,age int ,gender string ,clazz string")   // 类型不区分大小写
       .load("data/students.txt").printSchema()
+
+
+    /**
+     * 链接 jdbc 构建DF
+     */
+    val jdbcDF: DataFrame = spark.read.format("jdbc")
+      .option("url", "jdbc:mysql://hadoop100:3306")
+      .option("dbtable", "students.student")
+      .option("user", "root")
+      .option("password", "123456")
+      .load()
+
+    jdbcDF.printSchema()
+    jdbcDF.show()
+
 
   }
 }
