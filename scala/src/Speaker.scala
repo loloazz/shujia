@@ -1,0 +1,3 @@
+trait Speaker {
+def speak()
+}

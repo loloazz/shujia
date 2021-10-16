@@ -61,11 +61,22 @@ object Demo2UpdateStateByKey {
     KV.foreachRDD(println(_))
 
 
-    //
+    //  在写  undateStateBykey里面的函数时 ，注意   她已经聚合过了
 
+
+    /**
+     * 更新状态的函数（单词的数量）
+     *
+     * @param seq    ： 当前批次每一个key所有的value
+     * @param option : 之前计算的状态， 默认会保存到checkpoint中，所以需要指定checkpoint的路径
+     * @return 返回最新的状态
+     */
     def  updateState(seq:Seq[Int], option: Option[Int]) : Option[Int]={
 
+      // 得到上一次的值   没有返回0
       val last: Int = option.getOrElse(0)
+
+      // 队列求和
       val now: Int = seq.sum
 
       Some(last+now)

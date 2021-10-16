@@ -1,0 +1,7 @@
+package OOP
+
+object arrarybuffer {
+
+
+
+}
